@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سُلافة | Sulafa - Coffee & Mojito</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        coffee: {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            200: '#e5d1cb',
+                            300: '#d0b0a5',
+                            400: '#b88b7d',
+                            500: '#9e6a5c',
+                            600: '#845448',
+                            700: '#6d453b',
+                            800: '#5a3931',
+                            900: '#4b312b',
+                            950: '#281a17',
+                        },
+                        caramel: {
+                            500: '#d97706',
+                            600: '#b45309',
+                        }
+                    },
+                    fontFamily: {
+                        arabic: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts (Tajawal) -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #281a17;
+            color: #f2e8e5;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #281a17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6d453b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9e6a5c;
+        }
+    </style>
+</head>
+<body class="bg-coffee-950 text-coffee-100 antialiased selection:bg-caramel-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-coffee-950/90 backdrop-blur-md border-b border-coffee-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-caramel-600 to-coffee-400 flex items-center justify-center shadow-lg shadow-caramel-600/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-mug-hot text-coffee-950 text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-wider text-white">سُلافة</span>
+                    <span class="text-xs text-coffee-300 tracking-widest uppercase">Sulafa Cafe</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-medium">
+                <a href="#home" class="text-white hover:text-caramel-500 transition-colors">الرئيسية</a>
+                <a href="#menu" class="text-coffee-300 hover:text-caramel-500 transition-colors">المنيو</a>
+                <a href="#offers" class="text-coffee-300 hover:text-caramel-500 transition-colors">عروض اليوم</a>
+                <a href="#contact" class="text-coffee-300 hover:text-caramel-500 transition-colors">تواصل معنا</a>
+            </nav>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-4">
+                <!-- Cart Button -->
+                <button onclick="toggleCart()" class="relative p-2.5 rounded-full bg-coffee-900 border border-coffee-700 hover:bg-coffee-800 transition-colors text-coffee-200">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-caramel-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+
+                <!-- Order Fast CTA -->
+                <a href="#menu" class="hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-caramel-600 to-amber-600 hover:from-caramel-500 hover:to-amber-500 text-white px-5 py-2.5 rounded-full font-bold shadow-lg shadow-caramel-600/30 transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-bolt text-sm"></i>
+                    <span>طلب سريع</span>
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-coffee-900 text-coffee-300 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-coffee-900 border-b border-coffee-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-white font-medium hover:text-caramel-500">الرئيسية</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 text-coffee-300 font-medium hover:text-caramel-500">المنيو</a>
+            <a href="#offers" onclick="toggleMobileMenu()" class="block py-2 text-coffee-300 font-medium hover:text-caramel-500">عروض اليوم</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-coffee-300 font-medium hover:text-caramel-500">تواصل معنا</a>
+            <a href="#menu" onclick="toggleMobileMenu()" class="w-full text-center block bg-caramel-600 text-white py-2.5 rounded-xl font-bold mt-3">طلب سريع</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-b from-coffee-950 via-coffee-900 to-coffee-950">
+        <!-- Background Glows -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-caramel-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-coffee-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-coffee-800/80 border border-coffee-700 text-caramel-500 text-sm font-semibold mb-6 animate-pulse">
+                <i class="fa-solid fa-fire text-caramel-500"></i>
+                <span>اكتشف المذاق الفاخر للقهوة والموخيتو</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6 leading-tight">
+                Coffee, Mojito, Energy <br>
+                <span class="bg-gradient-to-r from-caramel-500 via-amber-400 to-amber-200 bg-clip-text text-transparent">Made with mood</span>
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-lg sm:text-xl text-coffee-300 mb-10 font-light leading-relaxed">
+                في <strong class="text-white font-semibold">سُلافة</strong>، نصنع كل كوب بعناية فائقة لنمنحك الانتعاش والطاقة التي تحتاجها طوال يومك بلمسة عصرية مميزة.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#menu" class="w-full sm:w-auto bg-gradient-to-r from-caramel-600 to-amber-600 hover:from-caramel-500 hover:to-amber-500 text-white font-bold px-8 py-4 rounded-2xl shadow-xl shadow-caramel-600/20 transition-all transform hover:-translate-y-1 text-center">
+                    <i class="fa-solid fa-book-open ml-2"></i> استعرض المنيو الآن
+                </a>
+                <a href="#offers" class="w-full sm:w-auto bg-coffee-900/80 hover:bg-coffee-800 text-coffee-100 border border-coffee-700 font-bold px-8 py-4 rounded-2xl transition-all text-center">
+                    <i class="fa-solid fa-gift ml-2 text-caramel-500"></i> عروض اليوم الخاصة
+                </a>
+            </div>
+
+            <!-- Features Highlights -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mt-20 pt-10 border-t border-coffee-800/60">
+                <div class="flex items-center justify-center gap-3 bg-coffee-900/40 p-4 rounded-xl border border-coffee-800/40">
+                    <div class="w-10 h-10 rounded-lg bg-caramel-500/10 flex items-center justify-center text-caramel-500 text-lg">
+                        <i class="fa-solid fa-mug-saucer"></i>
+                    </div>
+                    <div class="text-right">
+                        <h4 class="font-bold text-white text-sm">بن فاخر مختار</h4>
+                        <p class="text-xs text-coffee-400">جودة عالمية لا تقارن</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center gap-3 bg-coffee-900/40 p-4 rounded-xl border border-coffee-800/40">
+                    <div class="w-10 h-10 rounded-lg bg-caramel-500/10 flex items-center justify-center text-caramel-500 text-lg">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div class="text-right">
+                        <h4 class="font-bold text-white text-sm">طاقة وانتعاش</h4>
+                        <p class="text-xs text-coffee-400">مشروبات طاقة وموخيتو منعش</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center gap-3 bg-coffee-900/40 p-4 rounded-xl border border-coffee-800/40">
+                    <div class="w-10 h-10 rounded-lg bg-caramel-500/10 flex items-center justify-center text-caramel-500 text-lg">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div class="text-right">
+                        <h4 class="font-bold text-white text-sm">خدمة سريعة</h4>
+                        <p class="text-xs text-coffee-400">توصيل وطلبات فورية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-24 bg-coffee-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-caramel-500 font-bold uppercase tracking-widest text-sm block mb-3">القائمة الفاخرة</span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">منيو سُلافة</h2>
+                <p class="text-coffee-300">اختر مشروبك المفضل، واستمتع بتجربة فريدة ومصممة خصيصاً لتناسب مزاجك.</p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+                <button onclick="filterMenu('all')" class="category-btn active bg-caramel-600 text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-lg shadow-caramel-600/20 transition-all">الكل</button>
+                <button onclick="filterMenu('iced-coffee')" class="category-btn bg-coffee-800 text-coffee-300 hover:text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all border border-coffee-700">Iced Coffee</button>
+                <button onclick="filterMenu('mojito')" class="category-btn bg-coffee-800 text-coffee-300 hover:text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all border border-coffee-700">Mojito</button>
+                <button onclick="filterMenu('energy-mojito')" class="category-btn bg-coffee-800 text-coffee-300 hover:text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all border border-coffee-700">Energy Mojito</button>
+                <button onclick="filterMenu('special')" class="category-btn bg-coffee-800 text-coffee-300 hover:text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all border border-coffee-700">Sulafa Special</button>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Item 1 -->
+                <div class="menu-item bg-coffee-950 rounded-3xl p-6 border border-coffee-800/80 hover:border-caramel-500/50 transition-all duration-300 group flex flex-col justify-between shadow-xl" data-category="iced-coffee">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-5 bg-coffee-900">
+                            <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=600" alt="Iced Americano" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-coffee-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-caramel-400 border border-coffee-700">
+                                Iced Coffee
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-caramel-500 transition-colors">Iced Americano</h3>
+                        <p class="text-coffee-400 text-sm mb-4 line-clamp-2">إسبريسو غني مع الثلج النقي لمذاق قوي ومنعش.</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-800/60 mt-2">
+                        <span class="text-xl font-black text-caramel-400">85 <span class="text-xs font-normal text-coffee-300">LE</span></span>
+                        <button onclick="addToCart('Iced Americano', 85, 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=600')" class="bg-coffee-800 hover:bg-caramel-600 text-white p-3 rounded-xl transition-all shadow-md group-hover:scale-105">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="menu-item bg-coffee-950 rounded-3xl p-6 border border-coffee-800/80 hover:border-caramel-500/50 transition-all duration-300 group flex flex-col justify-between shadow-xl" data-category="iced-coffee">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-5 bg-coffee-900">
+                            <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&q=80&w=600" alt="Iced Spanish Latte" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-coffee-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-caramel-400 border border-coffee-700">
+                                Iced Coffee
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-caramel-500 transition-colors">Iced Spanish Latte</h3>
+                        <p class="text-coffee-400 text-sm mb-4 line-clamp-2">مزيج ساحر من الإسبريسو والحليب المحلى المكثف مع الثلج.</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-800/60 mt-2">
+                        <span class="text-xl font-black text-caramel-400">120 <span class="text-xs font-normal text-coffee-300">LE</span></span>
+                        <button onclick="addToCart('Iced Spanish Latte', 120, 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&q=80&w=600')" class="bg-coffee-800 hover:bg-caramel-600 text-white p-3 rounded-xl transition-all shadow-md group-hover:scale-105">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="menu-item bg-coffee-950 rounded-3xl p-6 border border-coffee-800/80 hover:border-caramel-500/50 transition-all duration-300 group flex flex-col justify-between shadow-xl" data-category="iced-coffee">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-5 bg-coffee-900">
+                            <img src="https://images.unsplash.com/photo-1578314675249-a6919f80cc4e?auto=format&fit=crop&q=80&w=600" alt="Choco Coco" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-coffee-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-caramel-400 border border-coffee-700">
+                                Iced Coffee
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-caramel-500 transition-colors">Choco Coco</h3>
+                        <p class="text-coffee-400 text-sm mb-4 line-clamp-2">شوكولاتة فاخرة مع نكهة جوز الهند المنعشة والقهوة الباردة.</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-800/60 mt-2">
+                        <span class="text-xl font-black text-caramel-400">125 <span class="text-xs font-normal text-coffee-300">LE</span></span>
+                        <button onclick="addToCart('Choco Coco', 125, 'https://images.unsplash.com/photo-1578314675249-a6919f80cc4e?auto=format&fit=crop&q=80&w=600')" class="bg-coffee-800 hover:bg-caramel-600 text-white p-3 rounded-xl transition-all shadow-md group-hover:scale-105">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="menu-item bg-coffee-950 rounded-3xl p-6 border border-coffee-800/80 hover:border-caramel-500/50 transition-all duration-300 group flex flex-col justify-between shadow-xl" data-category="mojito">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-5 bg-coffee-900">
+                            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600" alt="Classic Mojito" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-coffee-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-emerald-400 border border-coffee-700">
+                                Mojito
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-caramel-500 transition-colors">Classic Mojito</h3>
+                        <p class="text-coffee-400 text-sm mb-4 line-clamp-2">النعناع الطازج، الليمون الحامض، والصودا لإنعاش حواسك.</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-800/60 mt-2">
+                        <span class="text-xl font-black text-caramel-400">90 <span class="text-xs font-normal text-coffee-300">LE</span></span>
+                        <button onclick="addToCart('Classic Mojito', 90, 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600')" class="bg-coffee-800 hover:bg-caramel-600 text-white p-3 rounded-xl transition-all shadow-md group-hover:scale-105">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="menu-item bg-coffee-950 rounded-3xl p-6 border border-coffee-800/80 hover:border-caramel-500/50 transition-all duration-300 group flex flex-col justify-between shadow-xl" data-category="mojito">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-5 bg-coffee-900">
+                            <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&q=80&w=600" alt="Blueberry Mojito" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-coffee-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-emerald-400 border border-coffee-700">
+                                Mojito
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-caramel-500 transition-colors">Blueberry Mojito</h3>
+                        <p class="text-coffee-400 text-sm mb-4 line-clamp-2">توت بري منعش مع النعناع والثلج المجروش.</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-800/60 mt-2">
+                        <span class="text-xl font-black text-caramel-400">100 <span class="text-xs font-normal text-coffee-300">LE</span></span>
+                        <button onclick="addToCart('Blueberry Mojito', 100, 'https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&q=80&w=600')" class="bg-coffee-800 hover:bg-caramel-600 text-white p-3 rounded-xl transition-all shadow-md group-hover:scale-105">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="menu-item bg-coffee-950 rounded-3xl p-6 border border-coffee-800/80 hover:border-caramel-500/50 transition-all duration-300 group flex flex-col justify-between shadow-xl" data-category="energy-mojito">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-5 bg-coffee-900">
+                            <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=600" alt="Blue Energy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-coffee-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-blue-400 border border-coffee-700">
+                                Energy Mojito
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-caramel-500 transition-colors">Blue Energy</h3>
+                        <p class="text-coffee-400 text-sm mb-4 line-clamp-2">مشروب طاقة أزرق مع لمسة موخيتو لدفعة هائلة من الحيوية.</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-800/60 mt-2">
+                        <span class="text-xl font-black text-caramel-400">110 <span class="text-xs font-normal text-coffee-300">LE</span></span>
+                        <button onclick="addToCart('Blue Energy', 110, 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=600')" class="bg-coffee-800 hover:bg-caramel-600 text-white p-3 rounded-xl transition-all shadow-md group-hover:scale-105">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="menu-item bg-coffee-950 rounded-3xl p-6 border border-coffee-800/80 hover:border-caramel-500/50 transition-all duration-300 group flex flex-col justify-between shadow-xl" data-category="special">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-5 bg-coffee-900">
+                            <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=600" alt="Honey Lemon" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-coffee-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-amber-400 border border-coffee-700">
+                                Sulafa Special
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-caramel-500 transition-colors">Honey Lemon</h3>
+                        <p class="text-coffee-400 text-sm mb-4 line-clamp-2">العسل الطبيعي مع الليمون الطازج لراحة ودفء مثالي.</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-800/60 mt-2">
+                        <span class="text-xl font-black text-caramel-400">85 <span class="text-xs font-normal text-coffee-300">LE</span></span>
+                        <button onclick="addToCart('Honey Lemon', 85, 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=600')" class="bg-coffee-800 hover:bg-caramel-600 text-white p-3 rounded-xl transition-all shadow-md group-hover:scale-105">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="menu-item bg-coffee-950 rounded-3xl p-6 border border-coffee-800/80 hover:border-caramel-500/50 transition-all duration-300 group flex flex-col justify-between shadow-xl" data-category="special">
+                    <div>
+                        <div class="relative h-48 rounded-2xl overflow-hidden mb-5 bg-coffee-900">
+                            <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&q=80&w=600" alt="Cloud Mojito" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 bg-coffee-950/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-amber-400 border border-coffee-700">
+                                Sulafa Special
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-caramel-500 transition-colors">Cloud Mojito</h3>
+                        <p class="text-coffee-400 text-sm mb-4 line-clamp-2">ابتكار سُلافة الخاص برغوة غنية ومذاق منعش لا يُنسى.</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-coffee-800/60 mt-2">
+                        <span class="text-xl font-black text-caramel-400">120 <span class="text-xs font-normal text-coffee-300">LE</span></span>
+                        <button onclick="addToCart('Cloud Mojito', 120, 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&q=80&w=600')" class="bg-coffee-800 hover:bg-caramel-600 text-white p-3 rounded-xl transition-all shadow-md group-hover:scale-105">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers / Banner -->
+    <section id="offers" class="py-20 bg-gradient-to-tr from-coffee-950 via-coffee-900 to-coffee-950 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#d97706_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-gradient-to-r from-coffee-900 to-coffee-800 border border-coffee-700/60 rounded-3xl p-8 sm:p-12 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="space-y-4 text-center lg:text-right max-w-xl">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-caramel-500/10 text-caramel-400 text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-percent"></i> عروض حصرية
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight">عروض 3 في 1 وخصومات المباريات الكبرى!</h2>
+                    <p class="text-coffee-300 text-sm sm:text-base leading-relaxed">
+                        اطلب أي 2 مشروب موخيتو أو قهوة مثلجة واحصل على الثالث هدية! تجمّع مع أصحابك وشجع فريقك المفضل في سُلافة مع أقوى العروض والطاقات المنعشة.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                    <a href="#menu" class="bg-caramel-600 hover:bg-caramel-500 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-caramel-600/30 text-center transition-all">
+                        اغتنم العرض الآن
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer & Contact -->
+    <footer id="contact" class="bg-coffee-950 border-t border-coffee-800 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+                <!-- Brand Info -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-caramel-600 flex items-center justify-center text-coffee-950">
+                            <i class="fa-solid fa-mug-hot text-lg"></i>
+                        </div>
+                        <span class="text-2xl font-black text-white">سُلافة | Sulafa</span>
+                    </div>
+                    <p class="text-coffee-400 text-sm leading-relaxed">
+                        وجهتك الأولى للقهوة الفاخرة، الموخيتو المنعش، ومشروبات الطاقة المصنوعة خصيصاً لمزاجك الراقي.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="space-y-3">
+                    <h3 class="text-lg font-bold text-white mb-4">روابط سريعة</h3>
+                    <ul class="space-y-2 text-sm text-coffee-300">
+                        <li><a href="#home" class="hover:text-caramel-500 transition-colors">الرئيسية</a></li>
+                        <li><a href="#menu" class="hover:text-caramel-500 transition-colors">المنيو</a></li>
+                        <li><a href="#offers" class="hover:text-caramel-500 transition-colors">عروض اليوم</a></li>
+                        <li><a href="#contact" class="hover:text-caramel-500 transition-colors">تواصل معنا</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Socials -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-white mb-4">تواصل معنا</h3>
+                    <div class="space-y-3 text-sm text-coffee-300">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-caramel-500"></i>
+                            <span dir="ltr">01508953245</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-emerald-500 text-lg"></i>
+                            <span dir="ltr">01508953245</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-brands fa-instagram text-pink-500 text-lg"></i>
+                            <span>sulafa.cafe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-coffee-900 pt-8 text-center text-xs text-coffee-500">
+                جميع الحقوق محفوظة © 2026 سُلافة | Sulafa Cafe. تم التصميم والتطوير بعناية فائقة.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Drawer Overlay & Modal -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex justify-end">
+        <div class="w-full max-w-md bg-coffee-900 h-full shadow-2xl flex flex-col border-r border-coffee-800">
+            <!-- Cart Header -->
+            <div class="p-5 border-b border-coffee-800 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-caramel-500"></i>
+                    <h3 class="text-lg font-bold text-white">سلة المشتريات</h3>
+                </div>
+                <button onclick="toggleCart()" class="p-2 text-coffee-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items Container -->
+            <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+                <!-- Empty state handled in JS -->
+            </div>
+
+            <!-- Cart Footer -->
+            <div class="p-5 border-t border-coffee-800 bg-coffee-950 space-y-4">
+                <div class="flex items-center justify-between text-base font-bold text-white">
+                    <span>الإجمالي:</span>
+                    <span id="cart-total" class="text-caramel-400">0 LE</span>
+                </div>
+                <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span>إرسال الطلب عبر واتساب</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Interactivity -->
+    <script>
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Filter Menu Category
+        function filterMenu(category) {
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-caramel-600', 'text-white', 'shadow-lg', 'shadow-caramel-600/20');
+                btn.classList.add('bg-coffee-800', 'text-coffee-300', 'border', 'border-coffee-700');
+            });
+            event.target.classList.remove('bg-coffee-800', 'text-coffee-300', 'border', 'border-coffee-700');
+            event.target.classList.add('bg-caramel-600', 'text-white', 'shadow-lg', 'shadow-caramel-600/20');
+
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Cart State
+        let cart = [];
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function addToCart(name, price, img) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, img, quantity: 1 });
+            }
+            updateCartUI();
+            
+            // Brief visual feedback or open cart automatically
+            toggleCart();
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartUI();
+        }
+
+        function updateQuantity(name, change) {
+            const item = cart.find(item => item.name === name);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(name);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalCount;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center py-12 text-coffee-400">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-coffee-700"></i>
+                        <p>سلة المشتريات فارغة حالياً</p>
+                    </div>
+                `;
+                cartTotal.textContent = '0 LE';
+                return;
+            }
+
+            let html = '';
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                totalPrice += item.price * item.quantity;
+                html += `
+                    <div class="flex items-center gap-4 bg-coffee-950 p-3 rounded-2xl border border-coffee-800">
+                        <img src="${item.img}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-white text-sm">${item.name}</h4>
+                            <span class="text-xs text-caramel-400 font-semibold">${item.price} LE</span>
+                            <div class="flex items-center gap-3 mt-2">
+                                <button onclick="updateQuantity('${item.name}', -1)" class="w-6 h-6 rounded-lg bg-coffee-800 text-white flex items-center justify-center hover:bg-coffee-700">-</button>
+                                <span class="text-xs font-bold text-white">${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.name}', 1)" class="w-6 h-6 rounded-lg bg-coffee-800 text-white flex items-center justify-center hover:bg-coffee-700">+</button>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart('${item.name}')" class="text-coffee-500 hover:text-red-400 p-2">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            cartItems.innerHTML = html;
+            cartTotal.textContent = `${totalPrice} LE`;
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) return;
+
+            let message = "مرحباً، أريد طلب المنتجات التالية من مقهى سُلافة (Sulafa):\n\n";
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                message += `- ${item.name} (${item.quantity}x) : ${item.price * item.quantity} LE\n`;
+                totalPrice += item.price * item.quantity;
+            });
+
+            message += `\nالإجمالي الكلي: ${totalPrice} LE`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/201508953245?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
